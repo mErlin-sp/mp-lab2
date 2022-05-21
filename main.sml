@@ -80,3 +80,20 @@ fun number_before_reaching_sum(nums : int list, sum : int) : int =
   nbrs_r(nums, sum, 1, 0)
 
 val task8 = number_before_reaching_sum([1,2,3,4,7,8,9], 7);
+
+(* task11 *)
+fun is_older(a:int*int*int, b:int*int*int) : int =
+    if not((#1 a - #1 b) = 0)
+    then (#1 a - #1 b)
+    else if not((#2 a - #2 b) = 0)
+    then (#2 a - #2 b)
+    else (#3 a - #3 b)
+
+fun o_r ([], oldest_date) = oldest_date
+  | o_r (xn::xs, (0, 0, 0)) = o_r(xs, xn)
+  | o_r (xn::xs, oldest_date) = if (is_older(oldest_date, xn) > 0) then o_r(xs, xn) else o_r(xs, oldest_date)
+
+fun oldest(date_list :  (int*int*int) list) : (int*int*int) =
+  o_r(date_list, (0,0,0))
+
+val task11 = oldest([(2002,2,29) , (2002,2,30) , (2001,2,1) , (2000,2,1) , (2002,1,1) , (1999,5,10) , (2002,2,1)]);
